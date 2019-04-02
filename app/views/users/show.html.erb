@@ -2,55 +2,56 @@
   <div class="profile row">
     <div class="col-md-4 avatar">
       <div class="wrapper">
-        <img src="https://imgix.bustle.com/uploads/image/2018/4/9/0e1587de-fd74-4e77-9264-62a0bf5e894a-nup_130296_0067.jpeg?w=1020&amp;h=574&amp;fit=crop&amp;crop=faces&amp;auto=format&amp;q=70" srcset="https://imgix.bustle.com/uploads/image/2018/4/9/0e1587de-fd74-4e77-9264-62a0bf5e894a-nup_130296_0067.jpeg?w=375&amp;h=211&amp;fit=crop&amp;crop=faces&amp;auto=format&amp;q=70 375w, https://imgix.bustle.com/uploads/image/2018/4/9/0e1587de-fd74-4e77-9264-62a0bf5e894a-nup_130296_0067.jpeg?w=375&amp;h=211&amp;fit=crop&amp;crop=faces&amp;auto=format&amp;q=70&amp;dpr=2 750w, https://imgix.bustle.com/uploads/image/2018/4/9/0e1587de-fd74-4e77-9264-62a0bf5e894a-nup_130296_0067.jpeg?w=1020&amp;h=574&amp;fit=crop&amp;crop=faces&amp;auto=format&amp;q=70 1020w, https://imgix.bustle.com/uploads/image/2018/4/9/0e1587de-fd74-4e77-9264-62a0bf5e894a-nup_130296_0067.jpeg?w=1020&amp;h=574&amp;fit=crop&amp;crop=faces&amp;auto=format&amp;q=70&amp;dpr=2 2040w" alt="">
+        <% if @user.avatar.attached? %>
+          <%= image_tag @user.avatar %>
+        <%end %>
       </div>
     </div>
-
     <div class="col-md-8 basic-info">
       <div class="user-wrapper">
-        <h2 class="username">MGsputnik</h2>
-          <a class="edit-profile" href="<%= edit_user_path(current_user) %>">
+        <h2 class="username"><%= @user.username %></h2>
+        <% if @user == current_user %>
+          <a class="edit-profile" href="<%= edit_user_path(@user) %>">
             <button>Edit Profile</button>
           </a>
+        <% end %>
       </div>
       <ul class="posts">
-        <li><span>12</span> posts</li>
+        <li><span><%= @posts.count %></span> posts</li>
         <li><span>195</span> followers</li>
         <li><span>345</span> following</li>
-      </ul>
-      <h2 class="name">Michael Scott</h2>
-      <a class="website">mscott@dundermifflin.com</a>
+      </ul> -->
+      <h2 class="name"><%=@user.name %></h2>
+      <%=link_to @user.website, @user.website, class: 'website' %>
     </div>
   </div>
-</div>
 
-<div class="user-tabs">
-  <a class="tab active" href="">
-    <i class="fa fa-th"></i>
-    POSTS
-  </a>
-  <a class="tab" href="">
-    <i class="fa fa-tv"></i>
-    IGTV
-  </a>
-  <a class="tab" href="">
-    <i class="fa fa-bookmark"></i>
-    SAVED
-  </a>
-  <a class="tab" href="">
-    <i class="fa fa-tag"></i>
-    TAGGED
-  </a>
-</div>
+  <div class="user-tabs">
+    <a class="tab active" href="">
+      <i class="fa fa-th"></i>
+      POSTS
+    </a>
+    <a class="tab" href="">
+      <i class="fa fa-tv"></i>
+      IGTV
+    </a>
+    <a class="tab" href="">
+      <i class="fa fa-bookmark"></i>
+      SAVED
+    </a>
+    <a class="tab" href="">
+      <i class="fa fa-tag"></i>
+      TAGGED
+    </a>
+  </div>
 
-<div class="user-images">
-  <div class="wrapper">
-    <img src="https://cdn.shopify.com/s/files/1/0158/2436/products/michae-scott-boss_mug_1024x1024.jpg?v=1469559275">
-  </div>
-  <div class="wrapper">
-    <img src="your_image_url">
-  </div>
-  <div class="wrapper">
-    <img src="your_image_url">
+  <div class="user-images">
+    <% @posts.each do |post|%>
+      <div class="wrapper">
+        <%=link_to post_path(post) do %>
+          <%=image_tag post.image %>
+        <% end %>
+      </div>
+    <% end %>
   </div>
 </div>
